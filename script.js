@@ -1138,6 +1138,7 @@ let globeCoreMesh;
 let roomGroup;
 let is3DActive = false;
 let is3DPaused = false;
+let isThreeInViewport = true;
 let isExploded = false;
 let isGlobeAssembled = false;
 let assembleTimeouts = [];
@@ -1635,7 +1636,7 @@ if (explodeGlobeBtn) {
 function animateThreeJS(time) {
   if (!is3DActive) return;
   requestAnimationFrame(animateThreeJS);
-  if (is3DPaused) return; // Free GPU & CPU when hologram modal is open
+  if (is3DPaused || !isThreeInViewport) return; // หยุดเรนเดอร์ WebGL ทันทีเมื่อเลื่อนจอพ้น หรือเปิด Modal ช่วยให้เลื่อนหน้าจอด้านล่างลื่น 60 FPS สนิท
 
   TWEEN.update();
 
@@ -2522,9 +2523,11 @@ function initRunningBuddies() {
     }
   };
 
-  // Scroll visibility checking
+  // Scroll visibility checking & WebGL offscreen culling
   function checkVisibility() {
-    if (!threeSec || !playground) return;
+    if (!threeSec) return;
+    isThreeInViewport = threeSec.scrollTop < (window.innerHeight * 0.9);
+    if (!playground) return;
     if (!threeSec.classList.contains('hidden') && threeSec.scrollTop > 80) {
       playground.classList.add('active');
       window.startBuddiesRunning();
