@@ -1137,6 +1137,7 @@ let globeGroup;
 let globeCoreMesh;
 let roomGroup;
 let is3DActive = false;
+let is3DPaused = false;
 let isExploded = false;
 let isGlobeAssembled = false;
 let assembleTimeouts = [];
@@ -1178,9 +1179,9 @@ function initThreeJS() {
   camera = new THREE.PerspectiveCamera(55, width / height, 1.0, 2500);
   camera.position.set(0, 0, 235);
 
-  renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, logarithmicDepthBuffer: true });
+  renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: 'high-performance' });
   renderer.setSize(width, height);
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
   renderer.setClearColor(0xfff7fb, 1);
   threeCanvasContainer.innerHTML = '';
   threeCanvasContainer.appendChild(renderer.domElement);
@@ -1634,6 +1635,7 @@ if (explodeGlobeBtn) {
 function animateThreeJS(time) {
   if (!is3DActive) return;
   requestAnimationFrame(animateThreeJS);
+  if (is3DPaused) return; // Free GPU & CPU when hologram modal is open
 
   TWEEN.update();
 
@@ -2615,9 +2617,16 @@ function initBottomMiniBtn() {
   window.openHologramModal = function() {
     const holoModal = document.getElementById('hologramModal');
     const holoFrame = document.getElementById('hologramFrame');
+    is3DPaused = true; // หยุดเรนเดอร์ 3D ลูกโลกพื้นหลังชั่วคราว เพื่อคืนพลัง GPU/CPU ให้ Hologram วิ่งลื่น 100%
     if (holoModal && holoFrame) {
       if (!holoFrame.src || holoFrame.src === 'about:blank' || !holoFrame.src.includes('standalone.html')) {
         holoFrame.src = 'standalone.html';
+      } else {
+        try {
+          if (holoFrame.contentWindow) {
+            holoFrame.contentWindow.postMessage('resumeHologram', '*');
+          }
+        } catch (e) {}
       }
       holoModal.classList.remove('hidden');
       holoModal.classList.add('active');
@@ -2636,18 +2645,29 @@ function initBottomMiniBtn() {
 
   const closeHoloBtn = document.getElementById('closeHologramBtn');
   const holoModal = document.getElementById('hologramModal');
-  if (closeHoloBtn && holoModal) {
-    closeHoloBtn.addEventListener('click', (e) => {
-      e.stopPropagation();
+  function closeHologram() {
+    is3DPaused = false; // กลับมาเรนเดอร์ 3D ลูกโลกตามปกติ
+    if (holoModal) {
       holoModal.classList.remove('active');
       holoModal.classList.add('hidden');
       holoModal.style.display = 'none';
+    }
+    const holoFrame = document.getElementById('hologramFrame');
+    if (holoFrame && holoFrame.contentWindow) {
+      try {
+        holoFrame.contentWindow.postMessage('pauseHologram', '*');
+      } catch (e) {}
+    }
+  }
+
+  if (closeHoloBtn && holoModal) {
+    closeHoloBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      closeHologram();
     });
     holoModal.addEventListener('click', (e) => {
       if (e.target === holoModal) {
-        holoModal.classList.remove('active');
-        holoModal.classList.add('hidden');
-        holoModal.style.display = 'none';
+        closeHologram();
       }
     });
   }

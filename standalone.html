@@ -1636,6 +1636,7 @@ window.LAVENDER_CROP_B64 = 'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEAYABgAAD/2
     ctx.textBaseline = 'middle';
     ctx.textAlign = 'center';
 
+    let lastColor = '';
     for (let r = 0; r < ROWS; r++) {
       const y = (r + 0.5) * CH;
       const rowOffset = r * COLS;
@@ -1660,7 +1661,11 @@ window.LAVENDER_CROP_B64 = 'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEAYABgAAD/2
         let grn = Math.floor(qG * 255 / (QL - 1));
         let blu = Math.floor(qB * 255 / (QL - 1));
 
-        ctx.fillStyle = `rgb(${red},${grn},${blu})`;
+        const colStr = `rgb(${red},${grn},${blu})`;
+        if (colStr !== lastColor) {
+          ctx.fillStyle = colStr;
+          lastColor = colStr;
+        }
         const x = (c + 0.5) * CW;
 
         const isChinese = ch.charCodeAt(0) > 255;
@@ -1677,20 +1682,37 @@ window.LAVENDER_CROP_B64 = 'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEAYABgAAD/2
     }
   }
 
-  // Animation Loop
+  // Animation Loop with smooth locked 30 FPS to eliminate CPU stutter & lag
+  let lastFrameTime = 0;
+  const targetFPS = 30;
+  const frameInterval = 1000 / targetFPS;
+
   function tick(timestamp) {
-    if (isPlaying) {
-      const dt = Math.min((timestamp - lastTimestamp) / 1000, 0.1);
-      curTime += dt * playbackSpeed;
-      if (curTime > T_MAX) {
-        curTime = 0.0;
-        resetWorld();
-      }
+    requestAnimationFrame(tick);
+    if (!isPlaying) return;
+
+    if (!lastTimestamp) {
+      lastTimestamp = timestamp;
+      lastFrameTime = timestamp;
     }
+
+    const elapsed = timestamp - lastFrameTime;
+    if (elapsed < frameInterval) {
+      return; // Skip rendering too fast, saves massive CPU & device overheating
+    }
+
+    lastFrameTime = timestamp - (elapsed % frameInterval);
+
+    const dt = Math.min((timestamp - lastTimestamp) / 1000, 0.1);
     lastTimestamp = timestamp;
 
-    renderFrame(curTime, 1.0 / 30.0);
-    requestAnimationFrame(tick);
+    curTime += dt * playbackSpeed;
+    if (curTime > T_MAX) {
+      curTime = 0.0;
+      resetWorld();
+    }
+
+    renderFrame(curTime, 1.0 / targetFPS);
   }
 
   // Event Handlers (Safely guarded for UI-free minimal presentation)
@@ -1863,14 +1885,29 @@ window.LAVENDER_CROP_B64 = 'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEAYABgAAD/2
     resetWorld();
   };
 
+  window.pauseHologram = function() {
+    isPlaying = false;
+  };
+
+  window.resumeHologram = function() {
+    isPlaying = true;
+    lastTimestamp = performance.now();
+    lastFrameTime = performance.now();
+  };
+
   window.addEventListener('message', (event) => {
     if (event.data === 'restartHologram') {
       window.restartHologram();
+    } else if (event.data === 'pauseHologram') {
+      window.pauseHologram();
+    } else if (event.data === 'resumeHologram') {
+      window.resumeHologram();
     }
   });
 
-  // Setup Canvas Resolution & Initialize Grid to Ultra-HD by default!
-  initGrid('ultrahd');
+  // Setup Canvas Resolution: Auto-select HD for smooth 60fps across mobile & desktop
+  const isMobile = window.innerWidth < 768 || window.innerHeight < 600 || (navigator.maxTouchPoints && navigator.maxTouchPoints > 1);
+  initGrid(isMobile ? 'hd' : 'hd');
 
   function handleResize() {
     const container = canvas.parentElement;
