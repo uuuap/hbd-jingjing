@@ -1,0 +1,1056 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <title>Happy Birthday NONGJINGJING! 💙💖✨</title>
+  
+  <!-- Google Fonts: Itim, Mali, Prompt -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Itim&family=Mali:wght@400;600;700;800&family=Prompt:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  
+  <!-- Three.js & Libraries via CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tween.js/18.6.4/tween.umd.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+  
+  <link rel="stylesheet" href="style.css?v=20261106_2210">
+
+  <style>
+    /* CRITICAL UI - ป้องกันปัญหา Browser Cache และรับประกันดีไซน์หวานสวย 100% */
+    .passcode-hero-title {
+      font-family: 'Prompt', 'Mali', sans-serif;
+      text-align: center;
+      margin-bottom: 22px;
+      line-height: 1;
+      animation: floatTitle 3s ease-in-out infinite;
+    }
+    .hero-word-birthday {
+      display: block;
+      font-size: 3.4rem;
+      font-weight: 900;
+      color: #ffffff !important;
+      -webkit-text-stroke: 3px #6d83e2;
+      text-shadow: 0 5px 16px rgba(109, 131, 226, 0.45);
+      letter-spacing: 2px;
+      line-height: 1;
+    }
+    .passcode-card {
+      background: rgba(255, 246, 249, 0.96) !important;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1.5px solid #fed3e6 !important;
+      border-radius: 36px !important;
+      padding: 32px 28px 22px !important;
+      max-width: 320px !important;
+      width: 88% !important;
+      text-align: center !important;
+      box-shadow: 0 16px 45px rgba(254, 170, 205, 0.35), 0 0 25px rgba(254, 211, 230, 0.45) !important;
+      position: relative !important;
+      display: flex !important;
+      flex-direction: column !important;
+      align-items: center !important;
+      margin: 0 auto !important;
+    }
+    .passcode-ribbon-left {
+      position: absolute;
+      top: 24px;
+      left: 28px;
+      width: 3px;
+      height: 16px;
+      background: #fca5cc;
+      transform: rotate(-35deg);
+      border-radius: 3px;
+      opacity: 0.8;
+      pointer-events: none;
+    }
+    .passcode-sparkle-top {
+      position: absolute;
+      top: 14px;
+      right: 42px;
+      font-size: 1.5rem;
+      color: #ffe29a;
+      filter: drop-shadow(0 0 8px rgba(255, 226, 154, 0.9));
+      animation: twinkleStar 2.4s infinite ease-in-out;
+      pointer-events: none;
+    }
+    .passcode-title {
+      font-family: 'Prompt', 'Mali', sans-serif !important;
+      font-size: 1.45rem !important;
+      font-weight: 800 !important;
+      color: #d8315b !important;
+      margin: 0 0 3px 0 !important;
+      letter-spacing: 0.5px !important;
+      text-shadow: 0 2px 6px rgba(216, 49, 91, 0.12);
+    }
+    .passcode-subtitle {
+      font-size: 0.95rem !important;
+      font-weight: 600 !important;
+      color: #d47895 !important;
+      margin: 0 0 16px 0 !important;
+      letter-spacing: 0.5px !important;
+    }
+    .passcode-pill-box {
+      position: relative !important;
+      background: rgba(254, 211, 230, 0.45) !important;
+      border: 1.8px solid #fca5cc !important;
+      border-radius: 50px !important;
+      padding: 12px 24px !important;
+      width: 100% !important;
+      max-width: 220px !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      cursor: pointer !important;
+      box-shadow: inset 0 2px 6px rgba(254, 180, 210, 0.18) !important;
+      transition: all 0.25s ease !important;
+    }
+    .passcode-pill-box:hover,
+    .passcode-pill-box.focused {
+      border-color: #ff5c8a !important;
+      box-shadow: 0 0 16px rgba(255, 92, 138, 0.35), inset 0 2px 6px rgba(254, 180, 210, 0.2) !important;
+    }
+    .hidden-passcode-input {
+      position: absolute !important;
+      top: 0 !important;
+      left: 0 !important;
+      width: 100% !important;
+      height: 100% !important;
+      opacity: 0 !important;
+      filter: alpha(opacity=0) !important;
+      cursor: pointer !important;
+      border: none !important;
+      background: transparent !important;
+      outline: none !important;
+      box-shadow: none !important;
+      font-size: 16px !important;
+      z-index: 10 !important;
+    }
+    .pin-slots-wrapper {
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      gap: 16px !important;
+      pointer-events: none !important;
+    }
+    .pin-slot {
+      font-family: 'Prompt', monospace, sans-serif !important;
+      font-size: 1.6rem !important;
+      font-weight: 800 !important;
+      color: #b0a0b2 !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      width: 20px !important;
+      height: 26px !important;
+      line-height: 1 !important;
+      transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.25) !important;
+      user-select: none !important;
+    }
+    .pin-slot.filled {
+      color: #ff3377 !important;
+      transform: scale(1.25) !important;
+      text-shadow: 0 0 10px rgba(255, 51, 119, 0.45) !important;
+    }
+    .passcode-reset-btn {
+      background: none !important;
+      border: none !important;
+      color: #c78097 !important;
+      font-size: 0.88rem !important;
+      font-weight: 600 !important;
+      margin-top: 14px !important;
+      margin-bottom: 2px !important;
+      cursor: pointer !important;
+      padding: 6px 14px !important;
+      border-radius: 20px !important;
+      transition: all 0.2s ease !important;
+      font-family: inherit !important;
+      outline: none !important;
+      box-shadow: none !important;
+    }
+    .passcode-reset-btn:hover {
+      color: #d8315b !important;
+      background: rgba(254, 211, 230, 0.4) !important;
+    }
+    .passcode-feedback {
+      min-height: 18px !important;
+      font-size: 0.82rem !important;
+      font-weight: 700 !important;
+      margin-top: 6px !important;
+      margin-bottom: 0 !important;
+      transition: opacity 0.3s ease !important;
+    }
+    .passcode-feedback.error-text {
+      color: #ff3377 !important;
+    }
+    .passcode-feedback.success-text {
+      color: #2b8a3e !important;
+    }
+
+    /* Gift Character Reveal UI (Stage 1) */
+    .gift-character-wrapper {
+      position: relative !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      width: 100% !important;
+    }
+    .gift-character-reveal-img {
+      width: 240px !important;
+      max-width: 90% !important;
+      height: auto !important;
+      max-height: 260px !important;
+      object-fit: contain !important;
+      filter: drop-shadow(0 14px 28px rgba(254, 170, 205, 0.6)) !important;
+      animation: floatGiftCharacter 2.8s ease-in-out infinite alternate !important;
+      user-select: none !important;
+      -webkit-user-drag: none !important;
+      pointer-events: none !important;
+    }
+    @keyframes floatGiftCharacter {
+      0% {
+        transform: translateY(0px) rotate(-1.5deg) scale(1);
+      }
+      50% {
+        transform: translateY(-8px) rotate(1.5deg) scale(1.04);
+      }
+      100% {
+        transform: translateY(0px) rotate(-1.5deg) scale(1);
+      }
+    }
+    .gift-reveal-message {
+      font-family: 'Prompt', 'Mali', sans-serif !important;
+      font-size: 2.1rem !important;
+      font-weight: 800 !important;
+      color: #d8315b !important;
+      text-align: center !important;
+      margin: 16px 0 8px 0 !important;
+      letter-spacing: 0.5px !important;
+      text-shadow: 0 4px 15px rgba(216, 49, 91, 0.22) !important;
+      animation: pulseGiftText 2s ease-in-out infinite !important;
+      user-select: none !important;
+    }
+    @keyframes pulseGiftText {
+      0%, 100% {
+        transform: scale(1);
+        color: #d8315b;
+      }
+      50% {
+        transform: scale(1.04);
+        color: #ff3377;
+        text-shadow: 0 6px 22px rgba(255, 51, 119, 0.38);
+      }
+    }
+
+    /* Walking Candle Carrier Actor (Stage 2) */
+    .candle-carrier-actor {
+      position: absolute;
+      top: 10px;
+      left: -80px;
+      width: 65px;
+      height: 75px;
+      z-index: 12;
+      pointer-events: none;
+      transition: left 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .candle-carrier-actor.is-walking {
+      animation: waddleWalk 0.28s infinite alternate ease-in-out;
+    }
+    .candle-carrier-actor.is-planting {
+      animation: plantMotion 0.32s ease-in-out;
+    }
+    .candle-carrier-actor.is-cheering {
+      animation: cheerJump 0.55s infinite alternate ease-in-out;
+    }
+    .carrier-character-img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      filter: drop-shadow(0 6px 14px rgba(254, 180, 210, 0.5));
+      user-select: none;
+      -webkit-user-drag: none;
+    }
+    .carrier-held-candle {
+      position: absolute;
+      top: 24px;
+      right: -2px;
+      width: 14px;
+      height: 32px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      z-index: 5;
+      transition: opacity 0.25s ease, transform 0.25s ease;
+      filter: drop-shadow(0 0 6px rgba(255, 180, 0, 0.7));
+    }
+    .carrier-held-candle .carrier-flame {
+      width: 9px;
+      height: 14px;
+      background: radial-gradient(ellipse at bottom, #ffffff 10%, #ffd000 45%, #ff85a2 95%);
+      border-radius: 50% 50% 35% 35% / 60% 60% 40% 40%;
+      box-shadow: 0 0 10px #ff85a2, 0 0 16px #ffc2dc;
+      animation: flameFlicker 0.15s infinite alternate;
+    }
+    .carrier-held-candle .carrier-wick {
+      width: 2px;
+      height: 4px;
+      background: #333333;
+    }
+    .carrier-held-candle .carrier-stick {
+      width: 7px;
+      height: 16px;
+      background: repeating-linear-gradient(
+        45deg,
+        #ffffff,
+        #ffffff 3px,
+        #ff8fb8 3px,
+        #ff8fb8 6px
+      );
+      border-radius: 3px;
+      border: 1px solid #ff5c8a;
+    }
+    .carrier-bubble {
+      position: absolute;
+      top: -24px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #ffffff;
+      border: 1.5px solid #ff5c8a;
+      border-radius: 20px;
+      padding: 3px 10px;
+      font-family: 'Prompt', 'Mali', sans-serif;
+      font-size: 0.76rem;
+      font-weight: 800;
+      color: #d8315b;
+      white-space: nowrap;
+      box-shadow: 0 4px 12px rgba(255, 92, 138, 0.3);
+      pointer-events: none;
+      animation: bubblePop 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      z-index: 20;
+    }
+    .carrier-bubble::before {
+      content: '';
+      position: absolute;
+      bottom: -7px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 0;
+      height: 0;
+      border-left: 6px solid transparent;
+      border-right: 6px solid transparent;
+      border-top: 7px solid #ff5c8a;
+    }
+    .carrier-bubble::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 0;
+      height: 0;
+      border-left: 5px solid transparent;
+      border-right: 5px solid transparent;
+      border-top: 5px solid #ffffff;
+    }
+    @keyframes bubblePop {
+      0% { transform: translateX(-50%) scale(0.3); opacity: 0; }
+      100% { transform: translateX(-50%) scale(1); opacity: 1; }
+    }
+    @keyframes waddleWalk {
+      0% { transform: translateY(0) rotate(-6deg); }
+      100% { transform: translateY(-5px) rotate(6deg); }
+    }
+    @keyframes plantMotion {
+      0% { transform: translateY(0) scale(1); }
+      50% { transform: translateY(6px) scale(0.94); }
+      100% { transform: translateY(0) scale(1); }
+    }
+    @keyframes cheerJump {
+      0% { transform: translateY(0) scale(1) rotate(0deg); }
+      50% { transform: translateY(-15px) scale(1.08) rotate(5deg); }
+      100% { transform: translateY(0) scale(1) rotate(-5deg); }
+    }
+  </style>
+</head>
+<body class="pastel-theme">
+
+  <!-- Cinematic White Explosion Flash Overlay (เฟดจอขาวระเบิด) -->
+  <div id="whiteFlashOverlay" class="white-flash-overlay"></div>
+
+  <!-- Ambient Glowing Auras (Pastel Blue & Pastel Pink & Deep Navy) & Starfield -->
+  <div class="ambient-glow glow-blue"></div>
+  <div class="ambient-glow glow-pink"></div>
+  <div class="ambient-glow glow-navy"></div>
+  <div class="stars-bg" id="starsBg"></div>
+
+  <!-- Top Floating Controls (ซ่อนตามคำขอของผู้ใช้: เอาปุ่มเพลงวันเกิด และ QR หัวใจ ออก) -->
+  <div class="top-bar-controls" id="topBarControls" style="display: none !important;">
+    <button id="micToggleBtn" class="pill-btn mic-pill" title="เปิด/ปิดไมค์เป่าเทียน" style="display: none;">
+      <span class="mic-icon">🎤</span>
+      <span id="micStatusText">เปิดไมค์เป่า</span>
+    </button>
+    <button id="bgmBtn" class="pill-btn music-pill" title="เปิด/ปิดเพลง" style="display: none !important;">
+      <span class="music-icon">🎵</span>
+      <span>เพลงวันเกิด</span>
+    </button>
+    <button id="customPhotosBtn" class="pill-btn photos-pill" title="เปลี่ยนรูปภาพ 4 รูป" style="display: none;">
+      <span class="photo-icon">📷</span>
+      <span>ใส่รูป 4 รูป</span>
+    </button>
+    <button id="qrToggleBtn" class="pill-btn qr-pill" title="เปิด QR Code หัวใจ" style="display: none !important;">
+      <span class="qr-icon">💙💖</span>
+      <span>QR หัวใจ</span>
+    </button>
+  </div>
+
+  <!-- ========================================================
+       STAGE 0: PASSCODE SCREEN ("ยืนยันความน่ารัก")
+       ======================================================== -->
+  <section id="passcodeSection" class="fullscreen-stage active" style="z-index: 20;">
+    <div class="passcode-card" id="passcodeCard" style="background: rgba(255, 246, 249, 0.96); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border: 1.5px solid #fed3e6; border-radius: 36px; padding: 32px 28px 22px; max-width: 320px; width: 88%; text-align: center; box-shadow: 0 16px 45px rgba(254, 170, 205, 0.35), 0 0 25px rgba(254, 211, 230, 0.45); position: relative; display: flex; flex-direction: column; align-items: center; margin: 0 auto;">
+      <!-- Top Cute Ribbon & Sparkle Decorations Matching Screenshot -->
+      <div class="passcode-ribbon-left"></div>
+      <div class="passcode-sparkle-top">✦</div>
+
+      <!-- Title & Subtitle Matching User's Screenshot -->
+      <h2 class="passcode-title" style="font-family: 'Prompt', 'Mali', sans-serif; font-size: 1.45rem; font-weight: 800; color: #d8315b; margin: 0 0 3px 0; letter-spacing: 0.5px;">ยืนยันความน่ารัก</h2>
+      <p class="passcode-subtitle" style="font-size: 0.95rem; font-weight: 600; color: #d47895; margin: 0 0 16px 0; letter-spacing: 0.5px;">ใส่รหัสลับ 4 หลัก</p>
+
+      <!-- 4-Digit PIN Pill Box (Clicking focuses hidden native input) -->
+      <div class="passcode-pill-box" id="passcodePillBox" title="แตะเพื่อใส่รหัส 4 หลัก" style="position: relative; background: rgba(254, 211, 230, 0.45); border: 1.8px solid #fca5cc; border-radius: 50px; padding: 12px 24px; width: 100%; max-width: 220px; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: inset 0 2px 6px rgba(254, 180, 210, 0.18);">
+        <input id="hiddenPasscodeInput"
+               type="tel"
+               inputmode="numeric"
+               pattern="[0-9]*"
+               maxlength="4"
+               autocomplete="off"
+               class="hidden-passcode-input"
+               style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; border: none; background: transparent; outline: none; box-shadow: none; font-size: 16px; cursor: pointer; z-index: 10;"
+               aria-label="รหัสลับ 4 หลัก">
+        <div class="pin-slots-wrapper" style="display: flex; align-items: center; justify-content: center; gap: 16px; pointer-events: none;">
+          <span class="pin-slot" data-index="0" style="font-family: 'Prompt', monospace, sans-serif; font-size: 1.6rem; font-weight: 800; color: #b0a0b2; display: inline-flex; align-items: center; justify-content: center; width: 20px; height: 26px; line-height: 1;">∗</span>
+          <span class="pin-slot" data-index="1" style="font-family: 'Prompt', monospace, sans-serif; font-size: 1.6rem; font-weight: 800; color: #b0a0b2; display: inline-flex; align-items: center; justify-content: center; width: 20px; height: 26px; line-height: 1;">∗</span>
+          <span class="pin-slot" data-index="2" style="font-family: 'Prompt', monospace, sans-serif; font-size: 1.6rem; font-weight: 800; color: #b0a0b2; display: inline-flex; align-items: center; justify-content: center; width: 20px; height: 26px; line-height: 1;">∗</span>
+          <span class="pin-slot" data-index="3" style="font-family: 'Prompt', monospace, sans-serif; font-size: 1.6rem; font-weight: 800; color: #b0a0b2; display: inline-flex; align-items: center; justify-content: center; width: 20px; height: 26px; line-height: 1;">∗</span>
+        </div>
+      </div>
+
+      <!-- On-Screen Cute Numeric Keypad (กดปุ่มตัวเลขได้โดยตรงทันที ไม่ต้องง้อคีย์บอร์ดมือถือ) -->
+      <div class="passcode-keypad" id="passcodeKeypad">
+        <button type="button" class="num-key-btn" data-val="1">1</button>
+        <button type="button" class="num-key-btn" data-val="2">2</button>
+        <button type="button" class="num-key-btn" data-val="3">3</button>
+        <button type="button" class="num-key-btn" data-val="4">4</button>
+        <button type="button" class="num-key-btn" data-val="5">5</button>
+        <button type="button" class="num-key-btn" data-val="6">6</button>
+        <button type="button" class="num-key-btn" data-val="7">7</button>
+        <button type="button" class="num-key-btn" data-val="8">8</button>
+        <button type="button" class="num-key-btn" data-val="9">9</button>
+        <button type="button" class="num-key-btn key-action" data-val="clear" title="ล้างรหัสทั้งหมด">↺</button>
+        <button type="button" class="num-key-btn" data-val="0">0</button>
+        <button type="button" class="num-key-btn key-action" data-val="backspace" title="ลบตัวล่าสุด">⌫</button>
+      </div>
+
+      <!-- Inline Self-Contained Passcode Engine (ทำงานทันที 100% ไม่พึ่งพาไฟล์ภายนอก) -->
+      <script>
+        (function() {
+          var pin = '';
+          var unlocked = false;
+          var lastPressTime = 0;
+
+          function render() {
+            var slots = document.querySelectorAll('.pin-slot');
+            slots.forEach(function(s, i) {
+              if (i < pin.length) {
+                s.textContent = '●';
+                s.style.color = '#ff3377';
+                s.style.transform = 'scale(1.25)';
+                s.style.textShadow = '0 0 10px rgba(255, 51, 119, 0.45)';
+              } else {
+                s.textContent = '∗';
+                s.style.color = '#b0a0b2';
+                s.style.transform = 'scale(1)';
+                s.style.textShadow = 'none';
+              }
+            });
+          }
+
+          function unlockSuccess() {
+            unlocked = true;
+            var box = document.getElementById('passcodePillBox');
+            if (box) { box.style.borderColor = '#2b8a3e'; box.style.background = 'rgba(211, 249, 216, 0.6)'; }
+            var fb = document.getElementById('passcodeFeedback');
+            if (fb) { fb.textContent = '✓ ยืนยันความน่ารักสำเร็จ! ✨'; fb.style.color = '#2b8a3e'; }
+
+            // ให้ script.js ทำงานปลดล็อกและเริ่มนับถอยหลัง
+            if (typeof window.checkPasscode === 'function') {
+              window.enteredPin = pin;
+              window.checkPasscode();
+            } else {
+              // Fail-safe direct countdown
+              setTimeout(function() {
+                var passSec = document.getElementById('passcodeSection');
+                var countSec = document.getElementById('countdownSection');
+                if (passSec) {
+                  passSec.classList.remove('active');
+                  passSec.classList.add('hidden');
+                  passSec.style.display = 'none';
+                }
+                if (countSec) {
+                  countSec.classList.remove('hidden');
+                  countSec.classList.add('active');
+                  countSec.style.display = 'flex';
+                }
+                var topBar = document.getElementById('topBarControls');
+                if (topBar) topBar.style.display = 'flex';
+
+                if (typeof window.start5SecondCountdown === 'function') {
+                  window.start5SecondCountdown();
+                } else {
+                  // Fallback countdown timer directly in inline engine
+                  var num = 5;
+                  var cDigit = document.getElementById('countdownDigit');
+                  var cSub = document.getElementById('countdownSub');
+                  var timer = setInterval(function() {
+                    num--;
+                    if (num > 0) {
+                      if (cDigit) cDigit.textContent = num;
+                    } else {
+                      clearInterval(timer);
+                      if (typeof window.revealGiftCharacter === 'function') {
+                        window.revealGiftCharacter();
+                      }
+                    }
+                  }, 1000);
+                }
+              }, 500);
+            }
+          }
+
+          function wrongPin() {
+            var box = document.getElementById('passcodePillBox');
+            if (box) {
+              box.style.borderColor = '#ff3377';
+              box.style.animation = 'passcodeShake 0.4s ease';
+              setTimeout(function() { box.style.animation = ''; }, 450);
+            }
+            var fb = document.getElementById('passcodeFeedback');
+            if (fb) {
+              fb.textContent = 'รหัสยังไม่ถูกต้องน้า ลองใหม่อีกครั้งค่ะ ♡ (วันสำคัญของเราสองคน 🎂)';
+              fb.style.color = '#ff3377';
+            }
+            setTimeout(function() {
+              pin = '';
+              render();
+              if (box) box.style.borderColor = '#fca5cc';
+            }, 800);
+          }
+
+          window.handleKeypadPress = function(val) {
+            if (unlocked) return;
+            var now = Date.now();
+            if (now - lastPressTime < 120) return; // Debounce ป้องกันการแตะเบิ้ล
+            lastPressTime = now;
+
+            if (val === 'clear') {
+              pin = '';
+              render();
+            } else if (val === 'backspace') {
+              pin = pin.slice(0, -1);
+              render();
+            } else if (val >= '0' && val <= '9') {
+              if (pin.length < 4) {
+                pin += val;
+                render();
+                if (pin.length === 4) {
+                  if (pin === '0711') {
+                    unlockSuccess();
+                  } else {
+                    wrongPin();
+                  }
+                }
+              }
+            }
+          };
+
+          // ป้องกัน event ซ้อนกัน ใช้ pointerdown เพียงตัวเดียว
+          document.addEventListener('DOMContentLoaded', function() {
+            var btns = document.querySelectorAll('.num-key-btn');
+            btns.forEach(function(b) {
+              b.onpointerdown = function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                var v = b.getAttribute('data-val');
+                window.handleKeypadPress(v);
+              };
+            });
+          });
+        })();
+      </script>
+
+      <!-- Feedback / Error Text (Displays gently when needed) -->
+      <p class="passcode-feedback" id="passcodeFeedback" style="min-height: 18px; font-size: 0.82rem; font-weight: 700; margin-top: 6px; margin-bottom: 0;"></p>
+    </div>
+  </section>
+
+  <!-- ========================================================
+       STAGE 1: 5-SECOND COUNTDOWN (นับ 5 วิแล้วเต้กออกมา)
+       ======================================================== -->
+  <section id="countdownSection" class="fullscreen-stage hidden">
+    <div class="countdown-card" id="countdownCard">
+      <div class="stage-badge" id="countdownBadge">✦ COUNTDOWN ✦</div>
+      <div class="countdown-number-wrapper" id="countdownNumberWrapper">
+        <span class="countdown-digit" id="countdownDigit">5</span>
+      </div>
+      <p class="countdown-sub" id="countdownSub"></p>
+    </div>
+  </section>
+
+  <!-- ========================================================
+       STAGE 2: INTERACTIVE CAKE & CANDLES (ปักเทียน 7 เล่ม)
+       ======================================================== -->
+  <section id="cakeSection" class="fullscreen-stage hidden">
+    <div class="cake-experience-box">
+      
+      <!-- Interactive Dynamic Text Prompt -->
+      <div class="candle-prompt-container">
+        <span class="candle-count-badge" id="candleCountBadge">🎂 เค้กวันเกิดของ NONGJINGJING</span>
+        <h2 class="candle-prompt-text" id="candlePromptText">กำลังเดินมาปักเทียนให้ที่รัก... ♡</h2>
+        <p class="candle-prompt-sub" id="candlePromptSub">(เจ้าของวันเกิดรอเป่าเทียนได้เลยนะคะ ✨)</p>
+      </div>
+
+      <!-- The Cake Container with Multiple Candle Slots -->
+      <div class="cake-interact-wrapper" id="cakeInteractWrapper">
+        <div class="cake-halo dimmed" id="cakeHalo"></div>
+        
+        <!-- Walking Candle Carrier Character Actor (น้องเชอร์รี่เดินมาปักเทียน) -->
+        <div class="candle-carrier-actor" id="candleCarrierActor">
+          <div class="carrier-bubble hidden" id="carrierBubble">อธิษฐานแล้วเป่าได้เลยย</div>
+          <div class="carrier-held-candle" id="carrierHeldCandle">
+            <div class="carrier-flame"></div>
+            <div class="carrier-wick"></div>
+            <div class="carrier-stick"></div>
+          </div>
+          <img src="images/gift_character.png" alt="Cherry Helper" class="carrier-character-img">
+        </div>
+
+        <!-- 7 Candle Slots arranged across cake top -->
+        <div class="candles-slot-layer" id="candlesSlotLayer">
+          <!-- Candles 1 to 7 will be inserted dynamically here -->
+        </div>
+
+        <!-- SVG 2-Tier Birthday Cake in Cute White & Pastel Pink -->
+        <svg class="cake-svg-interactive" viewBox="0 0 320 250" xmlns="http://www.w3.org/2000/svg">
+          <!-- Plate (Frosted White with Strawberry Pink Rim) -->
+          <ellipse cx="160" cy="235" rx="140" ry="14" fill="#ffffff" stroke="#ff8fb8" stroke-width="2.5"/>
+          
+          <!-- Bottom Tier Cake (Sweet Baby Pink #fed3e6) -->
+          <rect x="50" y="150" width="220" height="80" rx="12" fill="#fed3e6" stroke="#fca5cc" stroke-width="2.5"/>
+          <!-- Sprinkles in Rose, Gold, White & Baby Pink -->
+          <circle cx="80" cy="205" r="3.5" fill="#ff6b9d"/>
+          <circle cx="120" cy="210" r="3.5" fill="#ffffff"/>
+          <circle cx="160" cy="205" r="3.5" fill="#ffd166"/>
+          <circle cx="200" cy="210" r="3.5" fill="#ff8fb8"/>
+          <circle cx="240" cy="205" r="3.5" fill="#ffffff"/>
+          
+          <!-- Bottom Tier Fluffy White Frosting Drips -->
+          <path d="M 48 150 
+                   C 60 178, 78 178, 92 150 
+                   C 106 182, 130 182, 144 150 
+                   C 160 178, 184 178, 198 150 
+                   C 214 182, 236 182, 250 150 
+                   C 262 174, 270 174, 272 150
+                   L 272 140 L 48 140 Z" fill="#ffffff" stroke="#fed3e6" stroke-width="2"/>
+
+          <!-- Top Tier Cake (Cute Strawberry Rose #fca5cc) -->
+          <rect x="85" y="85" width="150" height="65" rx="8" fill="#fca5cc" stroke="#ff8fb8" stroke-width="2.5"/>
+          
+          <!-- Top Tier Fluffy White Frosting Drips -->
+          <path d="M 83 85 
+                   C 96 112, 112 112, 124 85 
+                   C 138 116, 156 116, 168 85 
+                   C 182 116, 200 116, 212 85 
+                   C 224 112, 234 112, 237 85 
+                   L 237 76 L 83 76 Z" fill="#ffffff" stroke="#fed3e6" stroke-width="2"/>
+
+          <!-- Whipped Cream Puffs & Cute Strawberries on top corners -->
+          <ellipse cx="100" cy="74" rx="14" ry="9" fill="#ffffff" stroke="#fed3e6" stroke-width="2"/>
+          <circle cx="100" cy="65" r="8" fill="#ff5c8a"/>
+          <ellipse cx="220" cy="74" rx="14" ry="9" fill="#ffffff" stroke="#fed3e6" stroke-width="2"/>
+          <circle cx="220" cy="65" r="8" fill="#ff5c8a"/>
+
+          <ellipse cx="160" cy="72" rx="16" ry="10" fill="#ffffff" stroke="#ff8fb8" stroke-width="2"/>
+          <text x="160" y="75" font-size="14" text-anchor="middle">🎀</text>
+        </svg>
+      </div>
+
+      <!-- Helper Hint -->
+      <p class="click-hint-footer" id="clickHintFooter">🕯️ ตัวละครกำลังเดินมาปักเทียนทีละเล่ม... 🕯️</p>
+
+    </div>
+  </section>
+
+  <!-- ========================================================
+       STAGE 3: POST-CAKE FADE SCENES:
+       HAPPY ➔ BIRTHDAY ➔ TO ➔ NONGJINGJING (แบบ เปลี่ยนฉาก fade)
+       ======================================================== -->
+  <section id="fadeSceneStage" class="fade-scene-stage hidden">
+    <div class="fade-viewport" id="fadeViewport">
+      <div class="stage-badge" id="fadeBadge">WISHING YOU</div>
+      <div class="fade-word-box" id="fadeWordBox">
+        <h1 class="fade-main-text" id="fadeMainText">HAPPY</h1>
+      </div>
+      <p class="fade-sub-note" id="fadeSubNote">สุขสันต์วันเกิดคนพิเศษ ♡</p>
+    </div>
+  </section>
+
+  <!-- ========================================================
+       STAGE 4: 3D PHOTO GLOBE & EXPLODING GALLERY (THREE.JS)
+       ======================================================== -->
+  <section id="threeSection" class="threejs-fullscreen-stage hidden">
+    <!-- Hero 3D Area (100vh) -->
+    <div class="three-viewport-hero" id="threeViewportHero">
+      <!-- WebGL Canvas will be appended here -->
+      <div id="threeCanvasContainer" class="three-canvas-container"></div>
+      
+      <!-- Floating Center Message in Cylindrical Room (matching iPad & reference video) -->
+      <div class="center-room-message hidden" id="centerRoomMessage">
+        <h1 class="room-main-name">HAPPY JINGJING DAY</h1>
+        <p class="room-main-wish">ขอให้วันเกิดปีนี้เป็นวันที่ดีที่สุดวันนึงนะคะ ♡</p>
+      </div>
+
+
+      <!-- UI Overlay for 3D Gallery -->
+      <div class="three-ui-overlay">
+        <div class="gallery-title-banner">
+          <h2>HAPPY JINGJING DAY 💖</h2>
+          <p class="gallery-mode-hint" id="galleryModeHint" style="display: none;"></p>
+        </div>
+
+        <div class="three-bottom-actions" id="threeBottomActions" style="display: none !important;">
+          <button id="scrollDownBtn" class="action-btn scroll-down-btn pulse-glow" style="display: none;">
+            <span>👇</span> เลื่อนลงดูการ์ดเซอร์ไพรส์ ♡ <span>✨</span>
+          </button>
+          <button id="replayAnimBtn" class="action-btn replay-anim-btn" style="display: none;">✨ ดูแอนิเมชันระเบิดอีกครั้ง</button>
+          <button id="replayBtn" class="action-btn replay-btn" style="display: none;">↺ เริ่มต้นใหม่ทั้งหมด</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========================================================
+         SURPRISE CARDS SECTION (เลื่อนลงมาดูการ์ดนู่นนี่)
+         ======================================================== -->
+    <div class="surprise-cards-section" id="surpriseCardsSection">
+      
+      <!-- Section Main Header -->
+      <div class="cards-main-header">
+        <span class="cards-header-badge">SPECIAL BIRTHDAY GIFTS</span>
+        <h2 class="cards-header-title">เค้ามีอะไรจะบอกอ้วนด้วยย 💖</h2>
+        <p class="cards-header-sub" style="font-size: 1.15rem; font-weight: 700; color: #ff5c8a; letter-spacing: 2px; margin-top: 4px;">晶晶</p>
+        <div class="cards-cute-divider">
+          <span>🌸</span>
+          <span class="divider-line"></span>
+          <span>💖</span>
+          <span class="divider-line"></span>
+          <span>🌸</span>
+        </div>
+      </div>
+
+      <!-- Card 1: 💌 ซองจดหมายบอกรักวันเกิดจากใจ (Interactive Birthday Love Envelope) -->
+      <div class="surprise-card letter-card envelope-card is-closed" id="envelopeCard">
+        <div class="washi-tape-pin pin-left"></div>
+        <div class="washi-tape-pin pin-right"></div>
+
+        <!-- 1. The Sealed Envelope View (หน้าซองจดหมายตอนยังไม่ได้เปิด) -->
+        <div class="envelope-outer" id="envelopeOuter">
+          
+          <!-- Decorative Airmail Border -->
+          <div class="envelope-airmail-border"></div>
+
+          <!-- Postage Stamp on Top Right -->
+          <div class="envelope-postage-stamp">
+            <div class="stamp-border">
+              <span class="stamp-heart">💖</span>
+              <span class="stamp-date">07.11</span>
+            </div>
+          </div>
+
+          <!-- Top Triangular Flap -->
+          <div class="envelope-top-flap" id="envelopeTopFlap">
+            <svg class="flap-svg" viewBox="0 0 400 130" preserveAspectRatio="none">
+              <polygon points="0,0 400,0 200,130" fill="#fca5cc" stroke="#ff8fb8" stroke-width="2"/>
+              <polygon points="4,2 396,2 200,124" fill="#ffd8ea"/>
+            </svg>
+          </div>
+
+          <!-- Glowing Wax Seal (ตราประทับขี้ผึ้งสำหรับแตะเปิดซองจดหมาย) -->
+          <div class="wax-seal-wrapper" id="waxSealBtn">
+            <div class="wax-seal-stamp pulse-glow">
+              <div class="wax-seal-ring"></div>
+              <span class="wax-seal-heart">💌</span>
+              <span class="wax-seal-text">OPEN</span>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- 2. The Letter Paper (กระดาษจดหมายด้านใน เลื่อนเปิดออกมาอย่างสง่างาม) -->
+        <div class="envelope-letter-paper" id="envelopeLetterPaper">
+          <div class="letter-paper-inner">
+            <div class="letter-header">
+              <span class="letter-stamp-icon">💌</span>
+              <h3 class="letter-recipient">ถึง... NONGJINGJING ที่รัก 🎀</h3>
+            </div>
+            <div class="letter-body">
+              <p class="letter-p">สุขสันต์วันเกิดนะอ้วน ขอบคุณนะที่เกิดมาให้เค้ารัก 🎉✨</p>
+              <p class="letter-p">เค้าขอให้อ้วนมีความสุขมากๆ สุขภาพแข็งแรง ไม่เจ็บไม่ป่วยนะ ยิ้มเยอะๆ เพราะรอยยิ้มของอ้วนคือความสุขของเค้า 🌸</p>
+              <p class="letter-p">ขอให้อยู่ด้วยกันแบบนี้ไปนานๆ เติบโตไปด้วยกันในทุกๆ ปีเลยนะ ขอให้อ้วนรักเค้าเยอะๆ เหมือนที่เค้ารักอ้วนมากๆ 💕</p>
+              <p class="letter-p">เค้าไม่มีอะไรจะบอกอ้วนแล้วนอกจากคำว่า</p>
+              <p class="letter-sign" style="text-align: center; color: #ff3377; font-size: 1.12rem; line-height: 1.7; word-break: break-word; overflow-wrap: anywhere; margin-top: 12px; font-weight: 700;">
+                รักอ้วนรักอ้วนรักอ้วนรักอ้วนรักอ้วนรักอ้วนรักอ้วนรักอ้วนรักอ้วนรักอ้วนรักอ้วนรักอ้วนรักอ้วนรักอ้วนรักอ้วนรักอ้วนรักอ้วนรักอ้วนรักอ้วนรักอ้วนรักอ้วนรักอ้วนรักอ้วน 💖
+              </p>
+            </div>
+            <div class="letter-footer">
+              <button type="button" class="letter-stamp-btn pulse-glow" id="letterStampBtn">
+                <span>💌</span> แตะเพื่อส่งความรัก (Send Love) <span>💖</span>
+              </button>
+              <button type="button" class="letter-reclose-btn" id="letterRecloseBtn">
+                <span>✉️</span> พับเก็บใส่ซอง
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Card 2: 🎵 เครื่องเล่นเพลงแห่งความรัก (Pastel Vinyl Music Card) -->
+      <div class="surprise-card music-player-card">
+        <div class="music-card-header">
+          <span class="music-card-badge">🎶 OUR SPECIAL SONG</span>
+          <h3 class="music-card-title">เพลงนี้มอบให้ NONGJINGJING ♡</h3>
+        </div>
+        <div class="vinyl-player-box">
+          <div class="vinyl-disc-wrapper" id="vinylDiscWrapper">
+            <div class="vinyl-disc is-spinning" id="vinylDisc">
+              <div class="vinyl-groove"></div>
+              <div class="vinyl-groove"></div>
+              <div class="vinyl-center-label">
+                <img src="images/gift_character.png" alt="Vinyl Mascot" class="vinyl-label-img">
+              </div>
+            </div>
+          </div>
+          <div class="music-info-box">
+            <div class="music-track-name">นับหนึ่ง (From now on) 🎵</div>
+            <div class="music-artist-name">Billkin • แด่ NONGJINGJING 💖</div>
+            <div class="music-sound-bars" id="musicSoundBars">
+              <span class="sound-bar bar-1"></span>
+              <span class="sound-bar bar-2"></span>
+              <span class="sound-bar bar-3"></span>
+              <span class="sound-bar bar-4"></span>
+              <span class="sound-bar bar-5"></span>
+            </div>
+            <button type="button" class="music-card-play-btn" id="musicCardPlayBtn">
+              <span id="musicCardPlayIcon">🎵</span> <span id="musicCardPlayText">เปิด/ปิดเพลง Billkin</span>
+            </button>
+            <audio id="bgmAudio" preload="auto" loop>
+              <source src="audio/billkin_nubneung.m4a?v=20261106_2035" type="audio/mp4">
+              <source src="audio/billkin_nubneung.webm?v=20261106_2035" type="audio/webm">
+            </audio>
+          </div>
+        </div>
+        <p class="music-lyric-quote">
+          "เริ่มนับหนึ่งกับเธอในทุกๆ วัน... ขอให้ทุกเสียงเพลงเป็นความสุขของเธอเสมอ ♡"
+        </p>
+      </div>
+
+      <!-- Card 3: 📸 สมุดภาพโพลารอยด์ความทรงจำ (Polaroid Photo Memories) -->
+      <div class="surprise-card polaroid-gallery-card">
+        <div class="polaroid-gallery-header">
+          <span class="polaroid-header-badge">📷 SWEET MEMORIES</span>
+          <h3 class="polaroid-gallery-title">ภาพถ่ายความทรงจำแสนพิเศษ 🌸</h3>
+          <p class="polaroid-gallery-sub">แตะที่ภาพเพื่อดูภาพขยายขนาดใหญ่ได้เลยนะคะ</p>
+        </div>
+        <div class="polaroids-grid" id="polaroidsGrid">
+          <div class="polaroid-item tilt-left" data-index="0">
+            <div class="polaroid-tape"></div>
+            <div class="polaroid-photo-box">
+              <img src="images/photo1.jpg?v=20261106_2000" alt="Memory 1" class="polaroid-img" id="polaroidImg0">
+            </div>
+            <p class="polaroid-caption">หมูตอนเด็ก 🌸</p>
+          </div>
+          <div class="polaroid-item tilt-right" data-index="1">
+            <div class="polaroid-tape"></div>
+            <div class="polaroid-photo-box">
+              <img src="images/photo2.jpg?v=20261106_2000" alt="Memory 2" class="polaroid-img" id="polaroidImg1">
+            </div>
+            <p class="polaroid-caption">หมูหน้ากระจก 💕</p>
+          </div>
+          <div class="polaroid-item tilt-left-sm" data-index="2">
+            <div class="polaroid-tape"></div>
+            <div class="polaroid-photo-box">
+              <img src="images/photo3.jpg?v=20261106_2000" alt="Memory 3" class="polaroid-img" id="polaroidImg2">
+            </div>
+            <p class="polaroid-caption">หมูอ้วน 💫</p>
+          </div>
+          <div class="polaroid-item tilt-right-sm" data-index="3">
+            <div class="polaroid-tape"></div>
+            <div class="polaroid-photo-box">
+              <img src="images/photo4.jpg?v=20261106_2000" alt="Memory 4" class="polaroid-img" id="polaroidImg3">
+            </div>
+            <p class="polaroid-caption">หมูหันหลัง 👑</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bottom Footer Caption & Mini Square Button (กล่องสี่เหลี่ยมเล็กๆ) -->
+      <div class="cards-bottom-footer" style="padding: 24px 0 40px; display: flex; flex-direction: column; align-items: center; gap: 14px;">
+        <p class="cards-footer-caption" style="font-size: 1.05rem; font-weight: 700; color: #ff5c8a; margin: 0;">
+          Happy Birthday to NONGJINGJING 💖 Made with all my love ✨
+        </p>
+        <button id="bottomMiniBtn" class="bottom-mini-btn" type="button" title="กดเลย ♡">
+          <span class="mini-btn-icon">💖</span>
+        </button>
+      </div>
+
+    </div>
+
+
+    <!-- ========================================================
+         INTERACTIVE RUNNING BUDDIES (อิโมจิคู่หูหัวผลไม้ วิ่งเล่นน่ารักๆ)
+         ======================================================== -->
+    <div id="buddiesPlayground" class="buddies-playground">
+      <div class="buddies-track" id="buddiesTrack">
+        <!-- Buddy 1: Strawberry (อิโมจิหัวสตรอว์เบอร์รี่) -->
+        <div id="runnerBuddy1" class="runner-buddy buddy-strawberry" title="แตะเค้าสิ!">
+          <div class="buddy-speech-bubble" id="buddySpeech1"></div>
+          <div class="buddy-character-body" id="buddyBody1">
+            <img src="images/buddy_strawberry.png" alt="Strawberry Buddy" class="buddy-img" id="buddyImg1" />
+            <div class="buddy-shadow"></div>
+          </div>
+        </div>
+        <!-- Buddy 2: Cherry (อิโมจิหัวเชอร์รี่) -->
+        <div id="runnerBuddy2" class="runner-buddy buddy-cherry" title="แตะเค้าสิ!">
+          <div class="buddy-speech-bubble" id="buddySpeech2"></div>
+          <div class="buddy-character-body" id="buddyBody2">
+            <img src="images/buddy_cherry.png" alt="Cherry Buddy" class="buddy-img" id="buddyImg2" />
+            <div class="buddy-shadow"></div>
+          </div>
+        </div>
+        <!-- Cute Emote Pop between characters -->
+        <div id="buddyHeartPop" class="buddy-heart-pop">💖</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Lightbox Modal for Zooming In on Clicked Photo in 3D Space -->
+  <div id="photoLightbox" class="lightbox-backdrop hidden">
+    <div class="lightbox-modal">
+      <button class="lightbox-close" id="closeLightboxBtn">&times;</button>
+      <div class="lightbox-img-box">
+        <img id="lightboxImg" src="" alt="Enlarged Memory">
+      </div>
+      <p class="lightbox-caption">🌸 ความทรงจำแสนพิเศษของ NONGJINGJING 💙💖</p>
+    </div>
+  </div>
+
+  <!-- ASCII Hologram Modal (เปิดเมื่อกดปุ่มกล่องสี่เหลี่ยมของขวัญข้างล่าง) -->
+  <div id="hologramModal" class="lightbox-backdrop hidden" style="z-index: 99999; background: rgba(1, 2, 3, 0.94); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);">
+    <div class="hologram-modal-content" style="position: relative; width: 94vw; max-width: 900px; height: 86vh; max-height: 800px; background: #010203; border: 2px solid #ff8fb8; border-radius: 28px; box-shadow: 0 0 50px rgba(255, 92, 138, 0.45); overflow: hidden; display: flex; flex-direction: column;">
+      <button id="closeHologramBtn" type="button" style="position: absolute; top: 14px; right: 18px; z-index: 1000; background: rgba(255, 255, 255, 0.15); border: 1.5px solid #ff8fb8; color: #ffffff; width: 40px; height: 40px; border-radius: 50%; font-size: 1.5rem; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s ease;">&times;</button>
+      <iframe id="hologramFrame" src="standalone.html" style="width: 100%; height: 100%; border: none; background: #010203; border-radius: 26px;"></iframe>
+    </div>
+  </div>
+
+  <!-- Red/Pink Heart QR Code Modal (TikTok Inspired) -->
+  <div id="qrModal" class="lightbox-backdrop hidden">
+    <div class="lightbox-modal qr-card-modal">
+      <button class="lightbox-close" id="closeQrModalBtn">&times;</button>
+      <h3 class="qr-modal-title">💙 Pastel Heart QR Code 💖</h3>
+      <p class="qr-modal-desc">สแกนเพื่อเปิดการ์ดเซอร์ไพรส์วันเกิดของ NONGJINGJING</p>
+      
+      <div class="qr-preview-box">
+        <canvas id="qrCanvas" width="260" height="260"></canvas>
+      </div>
+
+      <div class="qr-modal-link-box">
+        <input type="text" id="shareUrlInput" readonly class="share-url-input">
+        <button id="copyUrlBtn" class="copy-url-btn">คัดลอกลิงก์</button>
+      </div>
+      <p class="qr-copied-hint hidden" id="qrCopiedHint">✓ คัดลอกลิงก์สำเร็จแล้ว!</p>
+    </div>
+  </div>
+
+  <!-- Modal for Customizing 4 Photos -->
+  <div id="photosModal" class="lightbox-backdrop hidden">
+    <div class="lightbox-modal photos-custom-modal">
+      <button class="lightbox-close" id="closePhotosModalBtn">&times;</button>
+      <h3 class="qr-modal-title">📷 อัปโหลดรูปภาพ 4 รูป</h3>
+      <p class="qr-modal-desc">ใส่รูปของ NONGJINGJING 4 รูป เพื่อใช้บนลูกโลกและห้องภาพ 3D</p>
+
+      <div class="photos-upload-grid">
+        <div class="photo-slot">
+          <label>รูปที่ 1</label>
+          <div class="slot-preview" id="slotPreview0"></div>
+          <input type="file" id="slotInput0" accept="image/*" class="slot-file-input">
+        </div>
+        <div class="photo-slot">
+          <label>รูปที่ 2</label>
+          <div class="slot-preview" id="slotPreview1"></div>
+          <input type="file" id="slotInput1" accept="image/*" class="slot-file-input">
+        </div>
+        <div class="photo-slot">
+          <label>รูปที่ 3</label>
+          <div class="slot-preview" id="slotPreview2"></div>
+          <input type="file" id="slotInput2" accept="image/*" class="slot-file-input">
+        </div>
+        <div class="photo-slot">
+          <label>รูปที่ 4</label>
+          <div class="slot-preview" id="slotPreview3"></div>
+          <input type="file" id="slotInput3" accept="image/*" class="slot-file-input">
+        </div>
+      </div>
+
+      <div class="photos-modal-actions">
+        <button id="savePhotosBtn" class="copy-url-btn">✓ บันทึกและใช้รูปทันที</button>
+        <button id="resetPhotosBtn" class="reset-photos-btn">↺ ใช้รูปเริ่มต้น</button>
+      </div>
+      <p class="qr-copied-hint hidden" id="photosSavedHint">✓ บันทึกรูปภาพเรียบร้อยแล้ว!</p>
+    </div>
+  </div>
+
+  <script src="script.js?v=20261106_2235"></script>
+  <script>
+    // Fail-safe auto-trigger: เมื่อหน้าเค้กแสดงขึ้นมา รับประกันว่าอนิเมชันปักเทียนต้องเริ่มทำงานทันทีแน่นอน
+    (function() {
+      const cakeSec = document.getElementById('cakeSection');
+      if (!cakeSec) return;
+      let hasTriggered = false;
+      const checkAndRun = function() {
+        if (cakeSec.classList.contains('active') && !cakeSec.classList.contains('hidden')) {
+          const slots = document.getElementById('candlesSlotLayer');
+          if (slots && slots.children.length === 0 && !hasTriggered) {
+            hasTriggered = true;
+            if (typeof window.startCharacterPlantingSequence === 'function') {
+              window.startCharacterPlantingSequence();
+            }
+          }
+        } else {
+          hasTriggered = false;
+        }
+      };
+      const obs = new MutationObserver(checkAndRun);
+      obs.observe(cakeSec, { attributes: true, attributeFilter: ['class'] });
+      // ตรวจสอบทันทีด้วย
+      checkAndRun();
+    })();
+  </script>
+</body>
+</html>
